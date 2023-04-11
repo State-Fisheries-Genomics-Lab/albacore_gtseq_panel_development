@@ -1,0 +1,42 @@
+---
+title: "notebook for panel development log"
+output:
+  html_document:
+    df_print: paged
+    code_folding: hide
+    toc: true
+    toc_float: true
+    toc_collapsed: false
+---
+
+```{r, message=FALSE, warning=FALSE}
+require(tidyverse)
+require(knitr)
+require(magrittr)
+```
+
+# Summary
+
+# PCA FST Detection Limits
+
+Here we assume that Fst ~ 1 / (1 + 4 Ne m) and that structure can be detected only above a detection limit of 1 / sqrt(n x p), where n is sample size and p is the number of markers. Given a fixed sample size set to the two times the second largest sampling location (n = 31*2 = 62), what level of migration is needed to detect population structure at a range of Ne?
+
+```{r}
+# create dataset
+
+# vector of Ne
+ne <- c(10000, 20000, 40000, 80000, 160000)
+m <- c(0.0001, 0.0005, 0.001, 0.005, 0.01, 0.05)
+
+fst_det <- expand_grid(ne, m)
+
+fst_det %<>%
+  mutate(fst = 1/(1+4*ne*m),
+         ne_f = as.factor(ne)) 
+  
+
+# FST detection threshold when n = 62 and the are 12,872 markers = FST = 0.0011
+
+ggplot(data = fst_det)+geom_line(aes(x = m, y = fst, color = ne_f))+scale_x_log10(labels = scales::comma)+scale_y_log10(labels = scales::comma)+geom_hline(aes(yintercept = 0.0011), linetype = 2, color = "red")+geom_hline(aes(yintercept = 0.0056), linetype = 2, color = "blue")+theme_bw()+guides(color=guide_legend(title="Effective Population Size"))
+```
+
