@@ -4,6 +4,8 @@ This repository documents development of the Oregon State University State Fishe
 
 A short summary is available in the file titled "panel_executive_summary"
 
+The "panel_development.docx" file provides a narrative description of the panel development process with a high level of detail.
+
 Further details, including fully reproducible logs of the components of this work completed by Dayan can be found at https://github.com/david-dayan/Albacore_feature_selection
 
 # Panel Design Overview
